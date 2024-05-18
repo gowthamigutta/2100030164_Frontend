@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Form Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Dynamic Form Builder</h1>
+      <hr />
+      <div id="form-container"></div>
+      <div class="btnbox">
+        <button class="inbtn" onclick="addTextInput()">Add Text Input</button>
+        <button class="inbtn" onclick="addCheckbox()">Add Checkbox</button>
+        <button class="inbtn" onclick="addRadioButton()">
+          Add Radio Button
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let formContainer = document.getElementById("form-container");
+
+      function addTextInput() {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.className = "form-field";
+        formContainer.appendChild(input);
+        addRemoveButton(input);
+      }
+
+      function addCheckbox() {
+        let input = document.createElement("input");
+        input.type = "checkbox";
+        input.className = "form-field";
+        formContainer.appendChild(input);
+        addRemoveButton(input);
+      }
+
+      function addRadioButton() {
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.name = "dynamic-radio";
+        input.className = "form-field";
+        formContainer.appendChild(input);
+        addRemoveButton(input);
+      }
+
+      function addRemoveButton(element) {
+        let removeButton = document.createElement("button");
+        removeButton.innerHTML = "Remove";
+        removeButton.onclick = () => {
+          formContainer.removeChild(element);
+          formContainer.removeChild(removeButton);
+        };
+        formContainer.appendChild(removeButton);
+      }
+    </script>
+  </body>
+</html>

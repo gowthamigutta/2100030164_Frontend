@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Data Table</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style></style>
+  </head>
+  <body>
+    <div class="container1">
+      <input type="text" id="filter-input" placeholder="Filter..." />
+      <table id="data-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">Age</th>
+            <th onclick="sortTable(2)">Country</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- Data rows will be inserted here dynamically -->
+        </tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+
+      <script>
+        let data = [
+          { name: "Aarav Patel", age: 25, country: "India" },
+          { name: "Aarushi Shah", age: 30, country: "India" },
+          { name: "Abhay Kumar", age: 28, country: "India" },
+          { name: "Aditi Singh", age: 45, country: "India" },
+          { name: "Advait Sharma", age: 35, country: "India" },
+          { name: "Akhil Gupta", age: 23, country: "India" },
+          { name: "Amitabh Pandey", age: 27, country: "India" },
+          { name: "Ananya Dubey", age: 33, country: "India" },
+          { name: "Anika Mishra", age: 29, country: "India" },
+          { name: "Arnav Sharma", age: 31, country: "India" },
+          { name: "Aryan Joshi", age: 26, country: "India" },
+          { name: "Avani Patel", age: 38, country: "India" },
+          { name: "Bhavya Reddy", age: 40, country: "India" },
+          { name: "Bhumika Gupta", age: 22, country: "India" },
+          { name: "Chirag Kumar", age: 37, country: "India" },
+          { name: "Darshan Singh", age: 24, country: "India" },
+          { name: "Deepika Mishra", age: 32, country: "India" },
+          { name: "Dhruv Pandey", age: 36, country: "India" },
+          { name: "Divya Shah", age: 41, country: "India" },
+          { name: "Gaurav Gupta", age: 34, country: "India" },
+          { name: "Harsh Patel", age: 39, country: "India" },
+          { name: "Ishaan Sharma", age: 42, country: "India" },
+          { name: "Ishika Singh", age: 43, country: "India" },
+          { name: "Jahanvi Kumar", age: 44, country: "India" },
+          { name: "Jai Joshi", age: 21, country: "India" },
+          { name: "Kabir Shah", age: 46, country: "India" },
+          { name: "Kaira Dubey", age: 47, country: "India" },
+          { name: "Kavya Gupta", age: 48, country: "India" },
+          { name: "Laksh Patel", age: 50, country: "India" },
+          { name: "Manav Pandey", age: 52, country: "India" },
+          { name: "Meera Singh", age: 53, country: "India" },
+          { name: "Mira Patel", age: 55, country: "India" },
+          { name: "Mohit Sharma", age: 56, country: "India" },
+          { name: "Neha Shah", age: 58, country: "India" },
+          { name: "Niharika Gupta", age: 59, country: "India" },
+          { name: "Nikhil Kumar", age: 60, country: "India" },
+          { name: "Niyati Dubey", age: 61, country: "India" },
+          { name: "Pari Patel", age: 62, country: "India" },
+          { name: "Pranav Singh", age: 63, country: "India" },
+          { name: "Priya Joshi", age: 64, country: "India" },
+          { name: "Rahul Shah", age: 65, country: "India" },
+          { name: "Riya Gupta", age: 66, country: "India" },
+          { name: "Rohan Kumar", age: 67, country: "India" },
+          { name: "Riya Sharma", age: 68, country: "India" },
+          { name: "Ritvik Pandey", age: 69, country: "India" },
+          { name: "Riya Shah", age: 70, country: "India" },
+          { name: "Saanvi Patel", age: 71, country: "India" },
+          { name: "Samaira Singh", age: 72, country: "India" },
+          { name: "Samar Gupta", age: 73, country: "India" },
+          { name: "Sana Joshi", age: 74, country: "India" },
+          { name: "Sanvi Shah", age: 75, country: "India" },
+        ];
+        let rowsPerPage = 15;
+        let currentPage = 1;
+
+        document
+          .getElementById("filter-input")
+          .addEventListener("input", function () {
+            renderTable(currentPage);
+          });
+
+        function renderTable(page) {
+          let tbody = document.getElementById("table-body");
+          tbody.innerHTML = "";
+          let filteredData = data.filter((row) => {
+            return row.name
+              .toLowerCase()
+              .includes(
+                document.getElementById("filter-input").value.toLowerCase()
+              );
+          });
+
+          let start = (page - 1) * rowsPerPage;
+          let end = start + rowsPerPage;
+          let paginatedData = filteredData.slice(start, end);
+
+          paginatedData.forEach((row) => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${row.name}</td><td>${row.age}</td><td>${row.country}</td>`;
+            tbody.appendChild(tr);
+          });
+
+          renderPagination(filteredData.length);
+        }
+
+        function renderPagination(totalRows) {
+          let pagination = document.getElementById("pagination");
+          pagination.innerHTML = "";
+
+          let totalPages = Math.ceil(totalRows / rowsPerPage);
+          for (let i = 1; i <= totalPages; i++) {
+            let button = document.createElement("button");
+            button.innerHTML = i;
+            button.onclick = () => {
+              currentPage = i;
+              renderTable(currentPage);
+            };
+            pagination.appendChild(button);
+          }
+        }
+
+        function sortTable(columnIndex) {
+          data.sort((a, b) => {
+            let valueA = Object.values(a)[columnIndex];
+            let valueB = Object.values(b)[columnIndex];
+            if (typeof valueA === "string") {
+              return valueA.localeCompare(valueB);
+            }
+            return valueA - valueB;
+          });
+          renderTable(currentPage);
+        }
+
+        renderTable(currentPage);
+      </script>
+    </div>
+  </body>
+</html>

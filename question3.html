@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Highlight Long Words</title>
+    <style>
+      .highlight {
+        background-color: rgba(194, 123, 0, 0.783);
+      }
+    </style>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container1">
+      <p id="text-paragraph">
+        "In the tranquil expanse of verdant meadows, where the gentle breeze
+        whispers through the swaying trees, lies a sanctuary of solace and
+        serenity. Here, amidst the idyllic beauty of nature's embrace, one finds
+        respite from the cacophony of urban life. The emerald canopy overhead
+        provides shelter to a myriad of creatures, from the majestic eagle to
+        the tiny hummingbird. The babbling brook meanders its way through the
+        landscape, its crystal-clear waters reflecting the azure sky above. In
+        this enchanted realm, time seems to stand still, allowing weary souls to
+        find peace and renewal. It is a place where dreams take flight and the
+        soul finds its true home. As the sun sets in a blaze of fiery hues,
+        painting the sky with shades of orange and pink, the world around
+        transforms into a magical wonderland. The stars twinkle overhead,
+        casting their gentle glow upon the earth below. Fireflies dance in the
+        darkness, their ethereal light guiding the way for wanderers in search
+        of adventure. The scent of wildflowers fills the air, carrying with it
+        the promise of new beginnings and endless possibilities. In this haven
+        of tranquility, the worries of the world melt away, replaced by a sense
+        of profound peace and contentment. Here, amidst the beauty of nature's
+        bounty, one finds solace in the simple pleasures of life. Whether it be
+        the laughter of children playing in the fields or the song of birds
+        greeting the dawn, every moment is a precious gift to be cherished. In
+        the embrace of nature's embrace, the soul finds its true essence,
+        reconnecting with the rhythms of the earth and the whispers of the wind.
+        It is a place of healing and rejuvenation, where the weary traveler
+        finds rest and the restless spirit finds calm. In the heart of this
+        tranquil paradise, amidst the beauty of the natural world, one discovers
+        the true meaning of inner peace and serenity."
+      </p>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let paragraph = document.getElementById("text-paragraph");
+        let text = paragraph.innerText;
+        let words = text.split(/\s+/);
+
+        words = words.map((word) => {
+          if (word.length > 8) {
+            return `<span class="highlight">${word}</span>`;
+          }
+          return word;
+        });
+
+        paragraph.innerHTML = words.join(" ");
+      });
+    </script>
+  </body>
+</html>
